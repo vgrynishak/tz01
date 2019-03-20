@@ -110,11 +110,9 @@ require_once (ROOT."/routes/Router.php");
                             <button type="submit" class="btn btn-info" name="info">Info</button> <!-- переглянути інформацію-->
                         </form>
                     </div>
-                    <?
+                    <?php
                 }
         ?>
     </div>
 </body>
 </html>
-
-<?php
