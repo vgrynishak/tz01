@@ -10,7 +10,7 @@ $DB_DSN = 'mysql:dbname=;host=127.0.0.1';
 $DB_USER = 'matcha'; //user_mysql
 $DB_PASSWORD = '111111'; //password
 $DB_DSNF = 'mysql:host=127.0.0.1'; //databases and host
-$DB_NAME = 'example'; //db_name
+$DB_NAME = 'test'; //db_name
 
 define('DB_DSN',$DB_DSN);
 define('DB_USER',$DB_USER);
