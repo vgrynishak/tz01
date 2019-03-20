@@ -46,14 +46,18 @@ require_once (ROOT."/routes/Router.php");
         <?php }?>
 
         <form method="post"> <!-- Додавання фільму-->
-            <input type="text" name="name" placeholder="title" required><br>
-            <input type="text" name="year" placeholder="year" required><br>
-            <select name="select" id="">
+            <label for="titles">Назва фільму:</label>
+                <input id="titles" type="text" name="name" placeholder="title" required><br>
+            <label for="year_prod">Рік Випуску:</label>
+            <input id="year_prod" type="text" name="year" placeholder="year" required><br>
+            <label for="format">Формат:</label>
+            <select name="select" id="format">
                 <option value="VHS" >VHS</option>
                 <option value="DVD">DVD</option>
                 <option value="Blu-Ray">Blu-Ray</option>
             </select><br>
-            <textarea name="actors" id="" cols="30" rows="5" placeholder="actors" required></textarea><br>
+            <div><label for="actors">Актори:</label></div>
+            <textarea name="actors" id="actors" cols="30" rows="5"  required></textarea><br>
             <button type="submit" class="btn btn-success" name="add">Добавити фільм</button>
         </form>
         <hr>
