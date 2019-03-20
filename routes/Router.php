@@ -11,17 +11,19 @@ if (isset($_POST['show'])){
 }
 
 if (isset($_POST['delete'])){
-    Action::delete(htmlspecialchars($_POST['id']));
+    Action::delete(htmlspecialchars(trim($_POST['id'])));
     $results = Action::show();
     $msg = "Фільм успішно видалено";
 }
 
 if (isset($_POST['add'])){
-    $year = htmlspecialchars($_POST['year']);
-    $title = htmlspecialchars($_POST['name']);
-    $select = htmlspecialchars($_POST['select']);
-    $actor = htmlspecialchars($_POST['actors']);
-    if (!is_numeric($year) || ($year <= 1500 || $year >= 2019))
+    $year = htmlspecialchars(trim($_POST['year']));
+    $title = htmlspecialchars(trim($_POST['name']));
+    $select = htmlspecialchars(trim($_POST['select']));
+    $actor = htmlspecialchars(trim($_POST['actors']));
+    if (!$year || !$title || !$select || !$actor)
+        $error = "Заповніть всі поля";
+    else if (!is_numeric($year) || ($year <= 1500 || $year >= 2019))
         $error = "Введіть коректний рік випуску фільму";
     else{
         Action::add($title,$year, $select, $actor);
@@ -35,22 +37,32 @@ if (isset($_POST['add_file'])){
         Action::add_file();
         $msg = "Фільми успішно імпортовано";
     }
+    else
+        $error ="Виберіть файл";
 }
 
 if (isset($_POST['search_actor'])){
-    $actor = htmlspecialchars($_POST['actor']);
-    $results = Action::search_by_actor('%'.$actor.'%');
-    if (!isset($results[0])){
-        $error_search = "За даним актором: '".$actor."'фільмів не знайдено.";
+    $actor = htmlspecialchars(trim($_POST['actor']));
+    if($actor) {
+        $results = Action::search_by_actor('%' . $actor . '%');
+        if (!isset($results[0])) {
+            $error_search = "За даним актором: '" . $actor . "' фільмів не знайдено.";
+        }
     }
+    else
+        $error = "Введіть ім'я актора";
 }
 
 if (isset($_POST['search_title'])){
-    $title = htmlspecialchars($_POST['title']);
-    $results = Action::search_by_title($title);
-    if (!isset($results[0])){
-        $error_search = "Фільм з назвою: '".$title."' не знайдено.";
+    $title = htmlspecialchars(trim($_POST['title']));
+    if ($title) {
+        $results = Action::search_by_title($title);
+        if (!isset($results[0])) {
+            $error_search = "Фільм з назвою: '" . $title . "' не знайдено.";
+        }
     }
+    else
+        $error = "Введіть назву фільма";
 }
 
 if (isset($_POST['info'])){
