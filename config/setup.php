@@ -15,8 +15,8 @@ function create_database_schem(){
         $count = $result->rowCount();
         if (!$count) {
             Db::create_db();
-            Db::create_table();
         }
+        Db::create_table();
     }
     catch (PDOException $ex)
     {
