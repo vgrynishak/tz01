@@ -6,7 +6,7 @@
  * Time: 15:16
  */
 
-$DB_DSN = 'mysql:dbname=;host=127.0.0.1';
+$DB_DSN = 'mysql:dbname=;host=127.0.0.1;charset=utf8';
 $DB_USER = 'matcha'; //user_mysql
 $DB_PASSWORD = '111111'; //password
 $DB_DSNF = 'mysql:host=127.0.0.1'; //databases and host
