@@ -33,9 +33,14 @@ if (isset($_POST['add'])){
 }
 
 if (isset($_POST['add_file'])){
-    if ($_FILES['userfile']['name']) {
-        Action::add_file();
-        $msg = "Фільми успішно імпортовано";
+    if ($_FILES['userfile']['type'] !== "text/plain"){
+        $error = "Формат файла повнен бути: .txt";
+    }
+    elseif ($_FILES['userfile']['name']) {
+        if (Action::add_file())
+            $msg = "Фільми успішно імпортовано";
+        else
+            $error = "Фільми не вдалось добавити до бази даних.";
     }
     else
         $error ="Виберіть файл";
@@ -56,7 +61,7 @@ if (isset($_POST['search_actor'])){
 if (isset($_POST['search_title'])){
     $title = htmlspecialchars(trim($_POST['title']));
     if ($title) {
-        $results = Action::search_by_title($title);
+        $results = Action::search_by_title('%'.$title.'%');
         if (!isset($results[0])) {
             $error_search = "Фільм з назвою: '" . $title . "' не знайдено.";
         }

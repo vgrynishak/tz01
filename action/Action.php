@@ -11,7 +11,7 @@ class Action
     public static function show()
     {
         $db = Db::getConnection();
-        $sql = "SELECT *   FROM films ORDER BY title ASC";
+        $sql = "SELECT *   FROM films ORDER BY title COLLATE utf8_general_ci ASC ";
         $wait = $db->prepare($sql);
         $wait->execute();
         $results = $wait->fetchAll(PDO::FETCH_ASSOC);
@@ -40,7 +40,7 @@ class Action
      */
     public static function search_by_title($title){
         $db = Db::getConnection();
-        $sql = "SELECT * FROM films WHERE Title LIKE ?";
+        $sql = "SELECT * FROM films WHERE Title COLLATE utf8_general_ci LIKE  ?";
         $wait = $db->prepare($sql);
         $wait->execute(array($title));
         $results = $wait->fetchAll(PDO::FETCH_ASSOC);
@@ -49,7 +49,7 @@ class Action
 
     public static function search_by_actor($actor){
         $db = Db::getConnection();
-        $sql = "SELECT * FROM films WHERE Stars LIKE ?";
+        $sql = "SELECT * FROM films WHERE  Stars COLLATE utf8_general_ci LIKE  ?";
         $wait = $db->prepare($sql);
         $wait->execute(array($actor));
         $results = $wait->fetchAll(PDO::FETCH_ASSOC);
@@ -106,9 +106,13 @@ class Action
              *      $wait->execute(array($matches[1],$matches[2], $matches[3], $matches[4]));
              */
         }
-        $db = Db::getConnection();
-        $sql = "INSERT INTO films (Title, Release_Year, format, Stars) VALUES " . $values;
-        $wait = $db->prepare($sql);
-        $wait->execute(array());
+        if ($values) {
+            $db = Db::getConnection();
+            $sql = "INSERT INTO films (Title, Release_Year, format, Stars) VALUES " . $values;
+            $wait = $db->prepare($sql);
+            $wait->execute(array());
+            return true;
+        }
+        return false;
     }
 }
